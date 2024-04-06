@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:primo_pay/squre(2).dart';
 //import 'package:primo_pay/squre(3).dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:uni_links/uni_links.dart';
 
 part 'main.g.dart';
 
@@ -22,7 +23,30 @@ class MyText extends _$MyText {
   }
 }
 
+void handleIncomingLinks() {
+  // Handle the link that opened the app
+  getInitialLink().then((initialLink) {
+    if (initialLink != null) {
+      print(initialLink);
+      // Process the initial link
+    }
+  });
+
+  // Listen for incoming links
+  linkStream.listen((String? link) {
+    if (link != null) {
+      // Process the incoming link
+      print(link);
+    }
+  }, onError: (err) {
+    // Handle errors
+    print(err);
+  });
+}
+
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  handleIncomingLinks();
   runApp(
     // For widgets to be able to read providers, we need to wrap the entire
     // application in a "ProviderScope" widget.

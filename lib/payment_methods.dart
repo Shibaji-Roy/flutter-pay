@@ -1,13 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:primo_pay/card_ui.dart';
 import 'package:primo_pay/satispay_intent.dart';
-import 'package:primo_pay/viva_wallet_intent.dart';
-//import 'lion_description.dart';
-//import 'tiger_description.dart';
-//import 'elephant_description.dart';
+import 'package:primo_pay/viva_details.dart';
 
 class Method {
   //final String name;
@@ -30,7 +25,7 @@ class _PayOption extends State<PayOption> {
       //'Lion',
       Image.network(
           'https://developer.vivawallet.com/images/pay-with-viva-wallet-logo.png'),
-      VivaWalletSelector(),
+      VivaDetails(),
     ),
     Method(
       //'Tiger',
@@ -86,6 +81,7 @@ class _PayOption extends State<PayOption> {
             decoration: BoxDecoration(color: Colors.white12),
             height: 55,
             child: ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
               scrollDirection: Axis.horizontal,
               itemCount: methods.length,
               itemBuilder: (context, index) {

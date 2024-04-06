@@ -12,20 +12,22 @@ class MySquare extends StatelessWidget {
         decoration: BoxDecoration(
             color: Color.fromRGBO(77, 169, 190, 10),
             borderRadius: BorderRadius.vertical(top: Radius.circular(10.0))),
-        height: 200,
+        height: 180,
         child: Center(
           child: Column(children: [
             Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
                 alignment: Alignment.topRight,
-                child: (IconButton(
-                    alignment: Alignment.topRight,
-                    icon: const Icon(Icons.language),
-                    onPressed: () {
-                      // Handle language change
-                    }))),
+                icon: const Icon(Icons.language),
+                onPressed: () {
+                  // Handle language change
+                },
+              ),
+            ),
             //const SizedBox(height: 20),
             SvgPicture.asset('assets/svg/logo-no-background (1).svg',
-                height: 130, width: 130)
+                height: 120, width: 120)
           ]),
           // child: Container(
           //   child: IconButton(

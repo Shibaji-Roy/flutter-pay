@@ -37,7 +37,7 @@ class PayBar extends ConsumerWidget {
                     prefixIconColor: Color.fromRGBO(214, 220, 221, 10)),
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
                 onChanged: (String value) =>
-                    {ref.watch(myTextProvider.notifier).update(value)},
+                    {ref.read(myTextProvider.notifier).update(value)},
               ),
             ),
           ],

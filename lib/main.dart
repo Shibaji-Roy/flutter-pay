@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:primo_pay/payment_methods.dart';
-import 'package:primo_pay/squre(1).dart';
-//import 'package:primo_pay/android_intent.dart';
-//import 'package:primo_pay/ui.dart';
+import 'package:primo_pay/square01.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:primo_pay/squre(2).dart';
-//import 'package:primo_pay/squre(3).dart';
+import 'package:primo_pay/square02.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:uni_links/uni_links.dart';
 
@@ -23,7 +20,19 @@ class MyText extends _$MyText {
   }
 }
 
-void handleIncomingLinks() {
+@riverpod
+class MyError extends _$MyError {
+  @override
+  String build() {
+    return "";
+  }
+
+  void update(String value) {
+    state = value;
+  }
+}
+
+void handleIncomingLinks(WidgetRef ref) {
   // Handle the link that opened the app
   getInitialLink().then((initialLink) {
     if (initialLink != null) {
@@ -40,13 +49,14 @@ void handleIncomingLinks() {
     }
   }, onError: (err) {
     // Handle errors
-    print(err);
+    print("Error:$err");
+    ref.read(myErrorProvider.notifier).update(err);
   });
 }
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  handleIncomingLinks();
+  // handleIncomingLinks();
   runApp(
     // For widgets to be able to read providers, we need to wrap the entire
     // application in a "ProviderScope" widget.
@@ -62,6 +72,7 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    handleIncomingLinks(ref);
     return MaterialApp(
       title: 'PrimoPay',
       theme: ThemeData(

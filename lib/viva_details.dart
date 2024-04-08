@@ -3,17 +3,19 @@
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_intent_plus/flag.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:primo_pay/main.dart';
 import 'package:primo_pay/mqtt_service.dart';
 import 'package:primo_pay/viva_button.dart';
 
-class VivaDetails extends StatefulWidget {
-  const VivaDetails({super.key});
+class VivaDetails extends ConsumerStatefulWidget {
+  // const VivaDetails({super.key});
 
   @override
-  State<VivaDetails> createState() => _VivaDetailsState();
+  _VivaDetailsState createState() => _VivaDetailsState();
 }
 
-class _VivaDetailsState extends State<VivaDetails> {
+class _VivaDetailsState extends ConsumerState<VivaDetails> {
   final MQTTClientWrapper mqttClientWrapper = MQTTClientWrapper();
 
   final _formKey = GlobalKey<FormState>();
@@ -31,20 +33,24 @@ class _VivaDetailsState extends State<VivaDetails> {
         path: 'v1',
         queryParameters: {
           'appId': 'com.example.primo_pay',
-          'action': 'activatePos',
-          'apikey': 'qwerty123456',
-          'apiSecret': 'qwerty123456',
-          'sourceID': 'qwerty123456',
-          'pinCode': '123142',
-          'skipExternalDeviceSetup': 'true',
-          'activateMoto': 'true',
-          'activateQRCodes': 'true',
-          'disableManualAmountEntry': 'true',
-          'forceCardPresentmentForRefund': 'true',
-          'lockRefund': 'true',
-          'lockTransactionsList': 'true',
-          'lockMoto': 'true',
-          'lockPreauth': 'true',
+          'action': 'sale',
+          'clientTransactionId': '1234567801234',
+          'amount': '${ref.watch(myTextProvider)}',
+          'tipAmount': '200',
+          'show_receipt': 'true',
+          'show_transaction_result': 'true',
+          'show_rating': 'true',
+          'ISV_amount': '100',
+          'ISV_clientId':
+              'kf7fpz4c4gkc6ch03u4415o8acipq9xdefzuto4b6by94.apps.vivapayments.com',
+          'ISV_clientSecret': 'SY5Nt33019xdyagX85Ct6DQwpTiZhG',
+          'ISV_sourceCode': 'Default',
+          'ISV_currencyCode': '978',
+          'ISV_customerTrns': 'ItemDescription',
+          'ISV_clientTransactionId': '12345678901234567890123456789012',
+          'ISV_merchantId': '1234567890',
+          'ISV_merchantSourceCode': '9090',
+          'paymentMethod': 'CardPresent',
           'callback': 'mycallbackscheme://result',
         },
       ).toString(),
@@ -142,6 +148,19 @@ class _VivaDetailsState extends State<VivaDetails> {
                     onPressed: () {
                       _submitForm();
                       _launchActivity();
+                      final errorMessage = ref.watch(myErrorProvider);
+                      if (errorMessage.isNotEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Container(
+                              padding: EdgeInsets.all(16),
+                              height: 90,
+                              decoration: BoxDecoration(color: Colors.red),
+                              child: Text(errorMessage),
+                            ),
+                          ),
+                        );
+                      }
                       // mqttClientWrapper.prepareMqttClient();
                     },
                     style: ElevatedButton.styleFrom(

@@ -36,8 +36,9 @@ void handleIncomingLinks(WidgetRef ref) {
   // Handle the link that opened the app
   getInitialLink().then((initialLink) {
     if (initialLink != null) {
-      print(initialLink);
+      print("InitialLink:$initialLink");
       // Process the initial link
+      ref.read(myErrorProvider.notifier).update(initialLink);
     }
   });
 
@@ -45,12 +46,11 @@ void handleIncomingLinks(WidgetRef ref) {
   linkStream.listen((String? link) {
     if (link != null) {
       // Process the incoming link
-      print(link);
+      print("Link:$link");
     }
   }, onError: (err) {
     // Handle errors
     print("Error:$err");
-    ref.read(myErrorProvider.notifier).update(err);
   });
 }
 

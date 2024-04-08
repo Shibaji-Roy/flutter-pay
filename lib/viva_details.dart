@@ -158,6 +158,8 @@ class _VivaDetailsState extends ConsumerState<VivaDetails> {
                               decoration: BoxDecoration(color: Colors.red),
                               child: Text(errorMessage),
                             ),
+                            behavior: SnackBarBehavior.floating,
+                            backgroundColor: Colors.transparent,
                           ),
                         );
                       }
